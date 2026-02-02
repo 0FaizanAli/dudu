@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Comic Sans MS', 'Segoe UI', cursive;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        touch-action: none;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        width: 92%;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        color: #ff4d6d;
+        margin-bottom: 10px;
+    }
+
+    .message {
+        font-size: 1.05em;
+        color: #444;
+        margin-bottom: 15px;
+    }
+
+    .pandas {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .pandas img {
+        width: 140px;
+        max-width: 60vw;
+        border-radius: 15px;
+    }
+
+    .label {
+        font-size: 0.85em;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    button {
+        background: #ff4d6d;
+        color: white;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1em;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #e63950;
+    }
+
+    .game {
+        display: none;
+        position: relative;
+        height: 260px;
+        border: 2px dashed #ff4d6d;
+        border-radius: 15px;
+        margin-top: 15px;
+        overflow: hidden;
+        background: #fff5f7;
+        touch-action: none;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 36px;
+        cursor: pointer;
+        user-select: none;
+        pointer-events: auto;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        from { transform: translateY(-40px); }
+        to { transform: translateY(300px); }
+    }
+
+    .score {
+        margin-top: 8px;
+        color: #ff4d6d;
+        font-weight: bold;
+    }
+
+    .final {
+        display: none;
+        margin-top: 15px;
+        font-size: 1.1em;
+        color: #ff4d6d;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Happy Valentine’s Day 💕</h1>
+
+    <!-- Dudu Bubu GIF -->
+    <div class="pandas">
+        <div>
+            <img src="https://media.tenor.com/ySITUM2KYHYAAAAj/dudu-bubu.gif" alt="Dudu and Bubu">
+            <div class="label">Dudu & Bubu</div>
+        </div>
+    </div>
+
+    <div class="message">
+        Like Dudu and Bubu,  
+        I want every silly moment and every forever with you 💖  
+        <br><br>
+        Will you be my Valentine?
+    </div>
+
+    <button onclick="startGame()">Catch My Hearts 💘</button>
+
+    <div class="game" id="game">
+        <div class="score">Hearts caught: <span id="score">0</span></div>
+    </div>
+
+    <div class="final" id="finalMessage">
+        You caught my heart ❤️  
+        So I guess… it’s yours now 😘
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    let gameTimer;
+    let dropTimer;
+
+    function startGame() {
+        const game = document.getElementById("game");
+        game.style.display = "block";
+        document.getElementById("finalMessage").style.display = "none";
+
+        score = 0;
+        document.getElementById("score").textContent = score;
+
+        dropTimer = setInterval(dropHeart, 600);
+        gameTimer = setTimeout(endGame, 12000);
+    }
+
+    function dropHeart() {
+        const game = document.getElementById("game");
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+        heart.textContent = "💖";
+
+        const size = 36;
+        const maxX = game.clientWidth - size;
+        heart.style.left = Math.random() * maxX + "px";
+
+        const duration = 3 + Math.random() * 1.5;
+        heart.style.animationDuration = duration + "s";
+
+        heart.addEventListener("pointerdown", () => {
+            score++;
+            document.getElementById("score").textContent = score;
+            heart.remove();
+        });
+
+        game.appendChild(heart);
+
+        setTimeout(() => heart.remove(), duration * 1000);
+    }
+
+    function endGame() {
+        clearInterval(dropTimer);
+        clearTimeout(gameTimer);
+        document.getElementById("finalMessage").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
+
